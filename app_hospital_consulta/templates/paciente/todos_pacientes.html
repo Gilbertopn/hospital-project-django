@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Lista de Pacientes</h1>
+    <ul>
+        {% for paciente in pacientes %}
+            <li>
+                <strong>Nome:</strong> {{ paciente.nome}}<br>
+                <strong>CPF:</strong>{{paciente.cpf}}<br>
+                <strong>Data de Nascimento:</strong> {{ paciente.data_nascimento }}<br>
+                <strong>Sexo:</strong> {{ paciente.sexo }}<br>
+                <strong>Telefone:</strong> {{ paciente.telefone }}<br>
+                <strong>Email:</strong> {{ paciente.email }}
+            
+            </li>
+            <a href="{% url 'editar_paciente' paciente.id %}">Editar</a>
+            <hr>
+        {% endfor %}
+    </ul>  
+    <div>
+        <a href="{% url 'cadastrar_paciente' %}">Cadastro de Paciente</a>
+    </div>
+</body>
+</html>

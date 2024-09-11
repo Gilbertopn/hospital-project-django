@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Paciente
 
 def criar_paciente(request):
@@ -19,5 +19,25 @@ def criar_paciente(request):
             email = email
         )
 
-       
+        return redirect('listar_pacientes')
+    
     return render (request, 'paciente/cadastro_paciente.html')
+
+def listar_pacientes(request):
+    pacientes = Paciente.objects.all()
+    return render (request, 'paciente/todos_pacientes.html', {'pacientes':pacientes})
+
+def editar_paciente(request, id):
+    paciente = get_object_or_404(Paciente, id=id)
+    
+    if request.method == 'POST':
+        paciente.nome = request.POST.get('nome')
+        paciente.cpf = request.POST.get('cpf')
+        paciente.data_nascimento = request.POST.get('data_nascimento')
+        paciente.sexo = request.POST.get('sexo')
+        paciente.telefone = request.POST.get('telefone')
+        paciente.email = request.POST.get('email')
+
+        return redirect('listar_pacientes')
+    
+    return render(request, 'paciente/editar_paciente.html', {'paciente':paciente})
