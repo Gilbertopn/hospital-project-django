@@ -41,3 +41,8 @@ def editar_paciente(request, id):
         return redirect('listar_pacientes')
     
     return render(request, 'paciente/editar_paciente.html', {'paciente':paciente})
+
+def deletar_paciente(request, id):
+    paciente = get_object_or_404(Paciente,id=id)
+    paciente.delete()
+    return redirect('listar_pacientes')

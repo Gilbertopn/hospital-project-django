@@ -17,8 +17,17 @@
                 <strong>Telefone:</strong> {{ paciente.telefone }}<br>
                 <strong>Email:</strong> {{ paciente.email }}
             
+
             </li>
-            <a href="{% url 'editar_paciente' paciente.id %}">Editar</a>
+            <form action="{% url 'deletar_paciente' paciente.id %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" onclick="return confirm('Tem certeza que deseja deletar este paciente?')">Deletar</button>
+            </form>
+
+            <form action="{% url 'editar_paciente' paciente.id %}">
+                {% csrf_token %}
+                <button type="submit" onclick="return confirm('Deseja editar as informações do paciente?')">Editar</button>
+            </form>
             <hr>
         {% endfor %}
     </ul>  
