@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from models import Paciente
+from .models import Paciente
 
 def criar_paciente(request):
     if request.method == 'POST':
@@ -20,4 +20,4 @@ def criar_paciente(request):
         )
 
        
-    return render (request, 'paciente/cadastro_paciente')
+    return render (request, 'paciente/cadastro_paciente.html')
