@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Criar Exame</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" maxlength="100" required>
+        <br>
+        <label for="observacao">Observação:</label>
+        <textarea id="observacao" name="observacao" maxlength="1000" required></textarea>
+        <br>
+        <label for="tipo_exame">Tipo de Exame:</label>
+        <select id="tipo_exame" name="tipo_exame" required>
+            {% for tipo in tipos_exame %}
+                <option value="{{ tipo.id }}">{{ tipo.nome }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <button type="submit">Salvar</button>
+    </form>
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+    <a href="{% url 'listar_exame' %}">Voltar à lista</a>
+    
+</body>
+</html>

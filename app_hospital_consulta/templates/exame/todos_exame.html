@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Listar Exames</h1>
+    <ul>
+        {% for exame in exames %}
+            <li>{{ exame.nome }}: {{ exame.observacao }} (Tipo: {{ exame.tipo_exame.nome }})</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'criar_exame' %}">Criar novo exame</a>
+</body>
+</html>

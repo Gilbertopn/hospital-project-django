@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Paciente
+from ..models import Paciente
 
 def criar_paciente(request):
     if request.method == 'POST':
