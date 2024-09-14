@@ -17,7 +17,7 @@ Including another URLconf
 
 
 from django.urls import path
-from app_hospital_consulta.views import views, views_exame, views_tipo_exame
+from app_hospital_consulta.views import views, views_exame, views_tipo_exame, views_consulta
 
 
 urlpatterns = [
@@ -33,4 +33,8 @@ urlpatterns = [
 
     path('criar_exame/', views_exame.criar_exame, name='criar_exame'),
     path('listar_exame/', views_exame.listar_exame, name='listar_exame'),
+
+  path('criar_consulta/', views_consulta.criar_consulta, name='criar_consulta'),
+    path('listar_consultas/', views_consulta.listar_consultas, name='listar_consultas'),
+    path('get_tipo_exame_por_exame/<int:exame_id>/', views_consulta.get_tipo_exame_por_exame, name='get_tipo_exame_por_exame'),
 ]

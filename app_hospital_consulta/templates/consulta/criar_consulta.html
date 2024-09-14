@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marcar Consulta</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="mb-4">Marcar Consulta</h2>
+
+        <!-- Exibir mensagem de erro, se existir -->
+        {% if error %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+
+            <!-- Seleção de Paciente -->
+            <div class="form-group">
+                <label for="paciente">Selecione o Paciente:</label>
+                <select class="form-control" name="paciente" id="paciente" required>
+                    <option value="">Selecione um Paciente</option>
+                    {% for paciente in pacientes %}
+                    <option value="{{ paciente.id }}">{{ paciente.nome }} - {{ paciente.cpf }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Seleção de Exame -->
+            <div class="form-group">
+                <label for="exame">Selecione o Exame:</label>
+                <select class="form-control" name="exame" id="exame" required>
+                    <option value="">Selecione um Exame</option>
+                    {% for exame in exames %}
+                    <option value="{{ exame.id }}">{{ exame.nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Exibir Tipo de Exame (automaticamente preenchido após a escolha do exame) -->
+            <div class="form-group">
+                <label for="tipo_exame">Tipo de Exame:</label>
+                <input type="text" class="form-control" id="tipo_exame" name="tipo_exame" readonly>
+            </div>
+
+            <!-- Data e Hora da Consulta -->
+            <div class="form-group">
+                <label for="data_hora">Data e Hora:</label>
+                <input type="datetime-local" class="form-control" name="data_hora" id="data_hora" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Marcar Consulta</button>
+        </form>
+    </div>
+
+    <!-- Script para carregar o tipo de exame quando o exame for selecionado -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#exame').change(function() {
+                var exameId = $(this).val();
+                if (exameId) {
+                    $.ajax({
+                        url: '/get_tipo_exame_por_exame/' + exameId + '/',
+                        type: 'GET',
+                        success: function(data) {
+                            $('#tipo_exame').val(data.tipo_exame.nome);
+                        }
+                    });
+                } else {
+                    $('#tipo_exame').val('');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
